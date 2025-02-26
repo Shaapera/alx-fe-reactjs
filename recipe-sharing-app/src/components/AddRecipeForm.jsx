@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useRecipeStore from "./useRecipeStore";
+import useRecipeStore from "./recipeStore";
 //import { useRecipeStore } from "../useRecipeStore";
 
 const AddRecipeForm = () => {

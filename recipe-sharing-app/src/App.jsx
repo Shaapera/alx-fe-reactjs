@@ -1,7 +1,7 @@
 import React from "react";
 import AddRecipeForm from "./components/AddRecipeForm";
 import RecipeList from "./components/RecipeList";
-import useRecipeStore from "./components/useRecipeStore";
+import useRecipeStore from "./components/recipeStore";
 
 function App() {
   return (
