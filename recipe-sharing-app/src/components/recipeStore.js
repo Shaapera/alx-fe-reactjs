@@ -1,7 +1,19 @@
 import {create}  from 'zustand'; // Use named import for 'create'
 
-const useRecipeStore = create((set) => ({
+const useRecipeStore = create((set get) => ({
   recipes: [],
+  searchTerm: '',
+  filteredRecipes: [],
+  setSearchTerm: (term) => {
+    set({ searchTerm: term });
+    get().filteredRecipes();
+  },
+  filteredRecipes: () => {
+    const { recipes, searchTerm } = get();
+    set({
+      filteredRecipes: recipes.filter((recipe) => recipe.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    });
+  },
   addRecipe: (newRecipe) =>
     set((state) => ({ recipes: [...state.recipes, newRecipe] })),
 
@@ -16,6 +28,6 @@ const useRecipeStore = create((set) => ({
       ),
     })),
   setRecipes: (recipes) => set({ recipes }),
-}));
+});
 
 export default useRecipeStore;
