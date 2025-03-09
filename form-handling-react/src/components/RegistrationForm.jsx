@@ -2,23 +2,12 @@ import React, { useState } from "react";
 
 const RegistrationForm = () => {
   // State for form fields
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // State for validation errors
   const [errors, setErrors] = useState({});
-
-  // Handle input changes
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
 
   // Handle form submission
   const handleSubmit = (e) => {
@@ -26,13 +15,13 @@ const RegistrationForm = () => {
 
     // Basic validation
     const newErrors = {};
-    if (!formData.username.trim()) {
+    if (!username.trim()) {
       newErrors.username = "Username is required";
     }
-    if (!formData.email.trim()) {
+    if (!email.trim()) {
       newErrors.email = "Email is required";
     }
-    if (!formData.password.trim()) {
+    if (!password.trim()) {
       newErrors.password = "Password is required";
     }
 
@@ -46,7 +35,7 @@ const RegistrationForm = () => {
     setErrors({});
 
     // Submit the form data (for now, just log it)
-    console.log("Form submitted:", formData);
+    console.log("Form submitted:", { username, email, password });
   };
 
   return (
@@ -56,10 +45,9 @@ const RegistrationForm = () => {
         <input
           type="text"
           id="username"
-                  name="username"
-                  value={username}
-          //value={formData.username} // Controlled component
-          onChange={handleInputChange}
+          name="username"
+          value={username} // Controlled component
+          onChange={(e) => setUsername(e.target.value)}
         />
         {errors.username && <span style={{ color: "red" }}>{errors.username}</span>}
       </div>
@@ -69,10 +57,9 @@ const RegistrationForm = () => {
         <input
           type="email"
           id="email"
-                  name="email"
-                  value={email}
-          //value={formData.email} // Controlled component
-          onChange={handleInputChange}
+          name="email"
+          value={email} // Controlled component
+          onChange={(e) => setEmail(e.target.value)}
         />
         {errors.email && <span style={{ color: "red" }}>{errors.email}</span>}
       </div>
@@ -82,10 +69,9 @@ const RegistrationForm = () => {
         <input
           type="password"
           id="password"
-                  name="password"
-                  value={password}
-          //value={formData.password} // Controlled component
-          onChange={handleInputChange}
+          name="password"
+          value={password} // Controlled component
+          onChange={(e) => setPassword(e.target.value)}
         />
         {errors.password && <span style={{ color: "red" }}>{errors.password}</span>}
       </div>
