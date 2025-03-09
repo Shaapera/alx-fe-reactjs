@@ -56,8 +56,9 @@ const RegistrationForm = () => {
         <input
           type="text"
           id="username"
-          name="username"
-          value={formData.username} // Controlled component
+                  name="username"
+                  value={username}
+          //value={formData.username} // Controlled component
           onChange={handleInputChange}
         />
         {errors.username && <span style={{ color: "red" }}>{errors.username}</span>}
@@ -68,8 +69,9 @@ const RegistrationForm = () => {
         <input
           type="email"
           id="email"
-          name="email"
-          value={formData.email} // Controlled component
+                  name="email"
+                  value={email}
+          //value={formData.email} // Controlled component
           onChange={handleInputChange}
         />
         {errors.email && <span style={{ color: "red" }}>{errors.email}</span>}
@@ -80,8 +82,9 @@ const RegistrationForm = () => {
         <input
           type="password"
           id="password"
-          name="password"
-          value={formData.password} // Controlled component
+                  name="password"
+                  value={password}
+          //value={formData.password} // Controlled component
           onChange={handleInputChange}
         />
         {errors.password && <span style={{ color: "red" }}>{errors.password}</span>}
