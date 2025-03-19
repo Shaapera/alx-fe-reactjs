@@ -32,21 +32,24 @@ const RecipeDetail = () => {
         <div className="mt-6">
           <h2 className="text-xl font-semibold mb-4">Ingredients</h2>
           <ul className="list-disc list-inside text-gray-600">
+            {/* Example static ingredients */}
             <li>Ingredient 1</li>
             <li>Ingredient 2</li>
             <li>Ingredient 3</li>
             {/* Add dynamic ingredients here if available in your data */}
           </ul>
         </div>
-        <div className="mt-6">
-          <h2 className="text-xl font-semibold mb-4">Cooking Instructions</h2>
-          <ol className="list-decimal list-inside text-gray-600">
-            <li>Step 1: Do something</li>
-            <li>Step 2: Do something else</li>
-            <li>Step 3: Finish cooking</li>
-            {/* Add dynamic steps here if available in your data */}
-          </ol>
-        </div>
+        {/* Conditionally render cooking instructions if available */}
+        {recipe.instructions && (
+          <div className="mt-6">
+            <h2 className="text-xl font-semibold mb-4">Cooking Instructions</h2>
+            <ol className="list-decimal list-inside text-gray-600">
+              {recipe.instructions.map((step, index) => (
+                <li key={index}>{step}</li>
+              ))}
+            </ol>
+          </div>
+        )}
       </div>
     </div>
   );
