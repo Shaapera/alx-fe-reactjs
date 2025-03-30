@@ -1,11 +1,46 @@
-# React + Vite
+# Recipe Sharing Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a React-based Recipe Sharing Platform built using Vite. The platform allows users to view detailed information about recipes, including ingredients, cooking instructions, and a summary.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- View a list of recipes.
+- Detailed recipe view with ingredients and cooking instructions.
+- Responsive design for a seamless experience on all devices.
+
+## Getting Started
+
+Follow these steps to run the project locally:
+
+1. Clone the repository:
+
+   ```bash
+   git clone <repository-url>
+   cd recipe-sharing-platform
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open the application in your browser at `http://localhost:5173`.
+
+## RecipeDetail Component
+
+The `RecipeDetail` component is responsible for displaying detailed information about a specific recipe. It fetches the recipe data based on the `id` parameter from the URL and displays the following:
+
+- Recipe title and image.
+- Summary of the recipe.
+- List of ingredients.
+- Cooking instructions (if available).
 
 ## Expanding the ESLint configuration
 

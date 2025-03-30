@@ -5,7 +5,7 @@ export default function Navbar() {
     return (
         <div>
             <nav>
-                <ul>
+                <ul style={bac}>
                     <li>
                         <Link to="/">Home</Link>
                     </li>
