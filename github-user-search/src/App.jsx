@@ -1,10 +1,8 @@
 import Search from './components/Search';
-import './App.css';
 
 function App() {
   return (
-    <div className="app">
-      <h1>GitHub User Search</h1>
+    <div className="min-h-screen bg-gray-50 py-8">
       <Search />
     </div>
   );
