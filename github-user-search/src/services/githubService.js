@@ -4,20 +4,18 @@ const BASE_URL = 'https://api.github.com';
 
 export const searchUsers = async ({ query, location, minRepos, language, page = 1 }) => {
   try {
+    // Construct the query string with all parameters
     let searchQuery = '';
     
     if (query) searchQuery += `${query} in:login,in:name`;
     if (location) searchQuery += ` location:${location}`;
     if (minRepos) searchQuery += ` repos:>${minRepos}`;
     if (language) searchQuery += ` language:${language}`;
+
+    // Explicitly construct the URL with q parameter
+    const apiUrl = `${BASE_URL}/search/users?q=${encodeURIComponent(searchQuery)}&per_page=30&page=${page}`;
     
-    const response = await axios.get(`${BASE_URL}/search/users`, {
-      params: {
-        q: searchQuery,
-        per_page: 30,
-        page
-      }
-    });
+    const response = await axios.get(apiUrl);
 
     // Fetch additional details for each user
     const usersWithDetails = await Promise.all(
