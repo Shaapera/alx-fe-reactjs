@@ -27,7 +27,7 @@ export default function Search() {
       setResults(data.items);
       setPage(1);
     } catch (err) {
-      setError("Failed to fetch users. Please try again.");
+      setError("Looks like we cant find the user");
       setResults([]);
     } finally {
       setLoading(false);
