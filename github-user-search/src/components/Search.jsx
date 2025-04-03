@@ -18,7 +18,7 @@ export default function Search() {
       const data = await fetchUserData(username);
       setUserData(data);
     } catch (err) {
-      setError(err.message);
+      setError("Looks like we cant find the user");
       setUserData(null);
     } finally {
       setLoading(false);
@@ -42,14 +42,15 @@ export default function Search() {
       {loading && <p>Loading...</p>}
       
       {error && (
-        <p className="error">Looks like we can't find the user</p>
+        <p className="error">{error}</p>
       )}
       
       {userData && (
         <div className="user-card">
           <img src={userData.avatar_url} alt="User avatar" width="100" />
-          <h2>{userData.name || username}</h2>
-          <p>{userData.bio}</p>
+          <h2>{userData.name || userData.login}</h2>
+          <p>Username: {userData.login}</p>
+          {userData.bio && <p>{userData.bio}</p>}
           <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
             View Profile
           </a>
