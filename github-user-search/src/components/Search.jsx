@@ -3,9 +3,10 @@ import { fetchUserData } from '../services/githubService';
 
 export default function Search() {
   const [username, setUsername] = useState('');
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState([]); // Changed to array for multiple results
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [searchHistory, setSearchHistory] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,10 +17,11 @@ export default function Search() {
     
     try {
       const data = await fetchUserData(username);
-      setUserData(data);
+      setUserData([data]); // Wrap single result in array for consistent mapping
+      setSearchHistory(prev => [...prev, username]);
     } catch (err) {
       setError("Looks like we cant find the user");
-      setUserData(null);
+      setUserData([]);
     } finally {
       setLoading(false);
     }
@@ -65,55 +67,76 @@ export default function Search() {
         </div>
       )}
 
-      {userData && (
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <div className="flex items-start space-x-6">
-            <img
-              src={userData.avatar_url}
-              alt={`${userData.login}'s avatar`}
-              className="w-24 h-24 rounded-full border-2 border-gray-200"
-            />
-            <div className="flex-1">
-              <h2 className="text-2xl font-bold text-gray-800">
-                <a
-                  href={userData.html_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:underline"
-                >
-                  {userData.name || userData.login}
-                </a>
-              </h2>
-              <p className="text-gray-600 mb-2">@{userData.login}</p>
-              
-              {userData.bio && (
-                <p className="text-gray-700 mb-4">{userData.bio}</p>
-              )}
-
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-                <div className="bg-gray-50 p-3 rounded-lg">
-                  <p className="text-sm text-gray-500">Repositories</p>
-                  <p className="text-xl font-semibold">{userData.public_repos}</p>
-                </div>
-                <div className="bg-gray-50 p-3 rounded-lg">
-                  <p className="text-sm text-gray-500">Followers</p>
-                  <p className="text-xl font-semibold">{userData.followers}</p>
-                </div>
-                <div className="bg-gray-50 p-3 rounded-lg">
-                  <p className="text-sm text-gray-500">Following</p>
-                  <p className="text-xl font-semibold">{userData.following}</p>
-                </div>
-                {userData.location && (
-                  <div className="bg-gray-50 p-3 rounded-lg">
-                    <p className="text-sm text-gray-500">Location</p>
-                    <p className="text-xl font-semibold">{userData.location}</p>
-                  </div>
-                )}
-              </div>
-            </div>
+      {/* Search history section */}
+      {searchHistory.length > 0 && (
+        <div className="mb-6">
+          <h2 className="text-lg font-semibold mb-2">Recent Searches</h2>
+          <div className="flex flex-wrap gap-2">
+            {searchHistory.map((term, index) => (
+              <span 
+                key={index} 
+                className="bg-gray-100 px-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-200"
+                onClick={() => setUsername(term)}
+              >
+                {term}
+              </span>
+            ))}
           </div>
         </div>
       )}
+
+      {/* User results using map */}
+      <div className="space-y-4">
+        {userData.map((user) => (
+          <div key={user.id} className="bg-white p-6 rounded-lg shadow-md">
+            <div className="flex items-start space-x-6">
+              <img
+                src={user.avatar_url}
+                alt={`${user.login}'s avatar`}
+                className="w-24 h-24 rounded-full border-2 border-gray-200"
+              />
+              <div className="flex-1">
+                <h2 className="text-2xl font-bold text-gray-800">
+                  <a
+                    href={user.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:underline"
+                  >
+                    {user.name || user.login}
+                  </a>
+                </h2>
+                <p className="text-gray-600 mb-2">@{user.login}</p>
+                
+                {user.bio && (
+                  <p className="text-gray-700 mb-4">{user.bio}</p>
+                )}
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                  <div className="bg-gray-50 p-3 rounded-lg">
+                    <p className="text-sm text-gray-500">Repositories</p>
+                    <p className="text-xl font-semibold">{user.public_repos}</p>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-lg">
+                    <p className="text-sm text-gray-500">Followers</p>
+                    <p className="text-xl font-semibold">{user.followers}</p>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-lg">
+                    <p className="text-sm text-gray-500">Following</p>
+                    <p className="text-xl font-semibold">{user.following}</p>
+                  </div>
+                  {user.location && (
+                    <div className="bg-gray-50 p-3 rounded-lg">
+                      <p className="text-sm text-gray-500">Location</p>
+                      <p className="text-xl font-semibold">{user.location}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
